@@ -1,0 +1,56 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Anaconda/Virtual Environments ---
+.env
+.venv
+venv/
+ENV/
+# Không nên push toàn bộ thư mục env lên Github/Git
+anaconda3/
+envs/
+
+# --- Jupyter Notebook ---
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+# Nếu bạn muốn giữ lại kết quả chạy, đừng ignore file .ipynb
+# Nhưng nếu file quá nặng, có thể ignore checkpoint
+
+# --- Data & Models (Dân AI cực kỳ lưu ý) ---
+# Tránh đẩy dữ liệu khổng lồ lên Git
+data/*.csv
+data/*.json
+data/*.zip
+# Tránh đẩy các file model nặng hàng GB
+models/*.h5
+models/*.pkl
+models/*.pt
+models/*.bin
+my_receptionist_brain/
+
+# --- OS/IDE rác ---
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.log

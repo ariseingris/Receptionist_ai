@@ -1,0 +1,29 @@
+[2026-03-29 12:21:06] MISS: mấy giờ rồi
+[2026-03-29 12:21:06] MISS: ở đâu vậy
+[2026-03-29 12:21:42] MISS: ở đâu vậy
+[2026-03-29 12:22:31] MISS: chào bạn
+[2026-03-29 12:22:31] MISS: xin chào
+[2026-03-29 12:22:31] MISS: tôi muốn đặt lịch
+[2026-03-29 12:22:31] MISS: ở đâu vậy
+[2026-03-29 12:22:31] MISS: giờ nào rồi
+[2026-03-29 12:22:49] MISS: chào bạn
+[2026-03-29 12:23:41] MISS: xin chao
+[2026-03-29 12:24:06] MISS: time ?
+[2026-03-29 12:24:23] MISS: i want to go to school
+[2026-03-29 12:24:27] MISS: stop
+[2026-03-29 12:45:48] MISS: Ê có ai ở đây không?
+[2026-03-29 12:45:48] MISS: Tạm biệt nhé
+[2026-03-29 12:45:48] MISS: Thời tiết Hà Nội hôm nay thế nào?
+[2026-03-29 12:45:48] MISS: Bạn có thể làm toán không?
+[2026-03-29 12:45:48] MISS: Tôi bị đau đầu quá
+[2026-03-29 12:45:48] MISS: Mai tớ ghé lấy đồ nha
+[2026-03-29 12:48:10] MISS: xin chao
+[2026-03-29 12:48:31] MISS: 15/09/2006
+[2026-03-29 12:48:38] MISS: clear
+[2026-03-29 12:51:01] MISS: what time is it ?
+[2026-03-29 13:54:53] MISS (Prob: 0.28): Ê có ai ở đây không?
+[2026-03-29 13:54:53] MISS (Prob: 0.28): Tạm biệt nhé
+[2026-03-29 13:54:53] MISS (Prob: 0.28): Bạn có thể làm toán không?
+[2026-03-29 13:54:53] MISS (Prob: 0.28): Cho hỏi shop có chi nhánh ở HCM không?
+[2026-03-29 13:54:53] MISS (Prob: 0.28): Tôi bị đau đầu quá
+[2026-03-29 13:54:53] MISS (Prob: 0.28): Mai tớ ghé lấy đồ nha
