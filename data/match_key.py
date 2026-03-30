@@ -1,3 +1,4 @@
+from curses import raw
 import json
 import os
 import random
@@ -31,11 +32,10 @@ class SimpleBrain: #the set of permutation and recognition rules for matching us
             f.write(f"[{timestamp}] MISS: {user_input}\n")
 
     def get_response(self, user_input: str) -> tuple[str, bool]:
-        """
-        Xử lý input và trả về câu trả lời.
-        Trả về tuple: (câu_trả_lời, is_matched)
-        """
+
         clean_text = normalize_text(user_input)
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        address = "abc xyz"
         
         # Duyệt qua các ý định và từ khóa
         for intent, keywords in self.content.items():
@@ -44,7 +44,15 @@ class SimpleBrain: #the set of permutation and recognition rules for matching us
                 if kw in clean_text:
                     # Nếu có, chọn ngẫu nhiên một câu trả lời trong list responses
                     possible_responses = self.responses.get(intent, ["Tôi hiểu ý định nhưng chưa có câu trả lời."])
-                    return random.choice(possible_responses), True
+                    
+                    final_response = random.choice(possible_responses).replace("{time}", current_time).replace("{address}", address).replace("{location}", address)
+
+                    final_response = final_response.replace("{time}", current_time.strftime("%Y-%m-%d %H:%M:%S")).replace("{address}", address).replace("{location}", address)
+                    final_response = final_response.replace("{date}", current_time.strftime("%Y-%m-%d"))
+                    final_response = final_response.replace("{weather}", "nắng")
+                    final_response = final_response.replace("{schedule}", current_time.strftime("%Y-%m-%d %H:%M:%S"))  # Nếu muốn chèn câu người dùng vào phản hồi
+
+                    return final_response, True
         
         # NẾU KHÔNG MATCH TỪ KHÓA NÀO
         self.log_miss(user_input)

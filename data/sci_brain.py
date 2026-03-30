@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import make_pipeline
 from data.cleandata import normalize_text
+from data.match_key import SimpleBrain
 
 class MLBrain:
     def __init__(self):
@@ -14,6 +15,7 @@ class MLBrain:
         project_dir = os.path.dirname(base_dir)
         
         self.miss_log_path = os.path.join(project_dir, 'logs', 'miss_log.txt')
+        os.makedirs(os.path.dirname(self.miss_log_path), exist_ok=True)
         
         # 1. Load Data
         with open(os.path.join(base_dir, 'content.json'), 'r', encoding='utf-8') as f:
@@ -26,13 +28,13 @@ class MLBrain:
 
     def _train_model(self):
         """
-        Phương thức private (có dấu _ ở đầu) dùng để huấn luyện model.
+        Phương thức private (có dấu _ ở đầu) dùng for train model.
         Biến file JSON thành X (câu văn) và y (nhãn/ý định).
         """
         X_train = []
         y_train = []
         
-        # Chuẩn bị dữ liệu
+        # prepare
         for intent, sentences in self.intents.items():
             for sentence in sentences:
                 # Nên normalize luôn data huấn luyện để đồng bộ với lúc test
@@ -61,7 +63,7 @@ class MLBrain:
         clean_text = normalize_text(user_input)
         if not clean_text:
             return "Bạn hãy nói gì đó đi!", False
-            
+
         # 1. Dự đoán Ý định (Intent)
         predicted_intent = self.model.predict([clean_text])[0]
         
@@ -70,14 +72,38 @@ class MLBrain:
         probabilities = self.model.predict_proba([clean_text])[0]
         max_prob = max(probabilities)
         
-        # Ngưỡng tự tin (Threshold): Nếu xác suất < 30% (0.3), coi như không hiểu
-        if max_prob < 0.3:
+        # Ngưỡng tự tin (Threshold): Nếu xác suất < 50% (0.5), coi như không hiểu
+        if max_prob < 0.5:
             self.log_miss(user_input, max_prob)
-            return f"🤖 AI ML chưa đủ tự tin ({max_prob:.0%} độ chắc chắn). Vui lòng nói rõ hơn!", False
+            return f"Chuyển sang model phức tạp [confidence: {max_prob:.2f}]", False
             
         # 3. TReturn res
         possible_responses = self.responses.get(predicted_intent, ["Tôi hiểu nhưng chưa biết nói gì."])
+        now = datetime.now()
+        current_time = now.strftime("%H:%M")          # Lấy giờ phút (VD: 14:30)
+        current_date = now.strftime("%d/%m/%Y")       # Lấy ngày tháng năm (VD: 30/03/2026)
         
-        # distinguish ML response with a confidence score
-        final_answer = f"[ML {max_prob:.0%}] {random.choice(possible_responses)}"
+        # Phân loại Sáng / Chiều / Tối
+        hour = now.hour
+        if hour < 12:
+            session = "sáng"
+        elif hour < 18:
+            session = "chiều"
+        else:
+            session = "tối"
+            
+        address = "18 Đường Hoang Quoc Viet, Vien Han Lam va Công Nghệ, TP Hà Nội"
+        
+        # 3. Thay thế các biến động vào chuỗi
+        # Pick once — reuse the same selection for substitution
+        raw_response = random.choice(possible_responses)
+
+        final_answer = raw_response.replace("{time}", current_time) \
+                                .replace("{date}", current_date) \
+                                .replace("{session}", session) \
+                                .replace("{location}", address) \
+                                .replace("{address}", address)
+
+        # Prefix with confidence score
+        final_answer = f"[ML {max_prob:.0%}] {final_answer}"
         return final_answer, True
